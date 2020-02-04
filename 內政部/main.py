@@ -3,7 +3,7 @@ import pycnnum as cnn
 import numpy as np
 
 ## prepare the dataframe "df_all"
-dir_input="C:\\Users\\Kevin&LinTES\\Desktop\\2001_國泰數數發中心\\不動產買賣資料\\"
+dir_input="D:\\Google\\C_Disk\\Desktop\\自傳履歷material\\202001_國泰數數發中心\\不動產買賣資料\\"
 #dtype_all={"交易年月日":str, "建築完成年月":str, "建物現況格局-房":int, "建物現況格局-廳":int, "建物現況格局-衛":int}
 dtype_all={"交易年月日":str, "建築完成年月":str}
 df_a=pd.read_csv(dir_input+"a_lvr_land_a.csv", header=[0,1], dtype=dtype_all)
@@ -26,8 +26,7 @@ df_fa=df_fa.iloc[bool_fa,:]
 
 # 總樓層數大於等於十三層
 sr_fa=pd.Series(df_fa["總樓層數"].values.flatten())
-sr_fa.dropna(inplace=True)
-sr_fa=sr_fa.str.slice(0,-1)
+sr_fa=sr_fa.replace(np.nan,"零層").str.slice(0,-1)    # to deal with nan values
 for i in range(sr_fa.shape[0]):
     sr_fa[i]=cnn.cn2num(sr_fa[i])   # Chinese number to Arabic number
 bool_fa=sr_fa>=13
@@ -39,7 +38,9 @@ df_fa=df_fa.iloc[bool_fa,:]
 tot_num=df_all.shape[0]
 # 總車位數
 sr_fb=pd.Series(df_all["交易筆棟數"].values.flatten())
-tot_pl=sr_fb.str.slice(-1).astype(int).sum()
+li_fb=pd.Series.tolist(sr_fb.str.split("車位").str.slice(-1))     # 取"車位"後面的數字
+li_fb=[s for sub in li_fb for s in sub]     # 2d list to 1d list
+tot_pl=sum([int(s) for s in li_fb])
 # 平均總價元
 avg_pr=df_all["總價元"].mean()
 avg_pr=avg_pr.map('${:,.2f}'.format)[0]
