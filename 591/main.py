@@ -6,8 +6,8 @@ import pymongo
 from bs4 import BeautifulSoup
 
 ## 參數
-#list_urlJumpIp = ["1", "3"]   # 1: 臺北市; 3: 新北市
-list_urlJumpIp = ["3"]   # 3: 新北市
+list_urlJumpIp = ["1", "3"]   # 1: 臺北市; 3: 新北市
+#list_urlJumpIp = ["3"]   # 3: 新北市
 
 ## 建立資料庫
 client = pymongo.MongoClient(host='localhost')
