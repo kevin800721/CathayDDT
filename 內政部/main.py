@@ -3,7 +3,7 @@ import pycnnum as cnn
 import numpy as np
 
 ## prepare the dataframe "df_all"
-dir_input="D:\\Google\\C_Disk\\Desktop\\自傳履歷material\\202001_國泰數數發中心\\不動產買賣資料\\"
+dir_input="C:\\"
 #dtype_all={"交易年月日":str, "建築完成年月":str, "建物現況格局-房":int, "建物現況格局-廳":int, "建物現況格局-衛":int}
 dtype_all={"交易年月日":str, "建築完成年月":str}
 df_a=pd.read_csv(dir_input+"a_lvr_land_a.csv", header=[0,1], dtype=dtype_all)
